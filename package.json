@@ -1,6 +1,6 @@
 {
   "name": "customer_policy_details",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "customer_policy_details",
   "main": "index.js",
   "scripts": {
