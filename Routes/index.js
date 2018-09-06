@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.delete('/', (req, res) => {
-    res.setEncoding('hello');
+router.get('/', (req, res) => {
+    res.send('hello');
 });
 
 module.exports = router;
