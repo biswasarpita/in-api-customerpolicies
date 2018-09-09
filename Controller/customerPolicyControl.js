@@ -2,9 +2,30 @@ const initDB = require('../db'); // eslint-disable-line no-unused-vars
 const CustomerDetails = require('../Model/customerDetails');
 const policyDetails = require('../Model/policyDetails');
 
+module.exports.get_customerdetails_by_mdmid = async (req, res) => {
+    try {
+        const customerDetails = await CustomerDetails.findOne({ mdmid: req.params.mdmid });
+        let policies = customerDetails.policyNumber.map(async (element, index) => {
+            const policyObj = await PolicyDetails.find({ policyNumber: element.policyId });
+            customerDetails.policyNumber[index] = policyObj[0];
+            return policyObj[0];
+        });
+        await Promise.all(policies);
 
-module.exports.get_customerdetails_by_mdmid = (req, res) => {
-    customerDetails.findById(req.params.mdmid)
+        res.send({
+            status: 'OK',
+            parties: customerDetails
+        });
+    } catch (e) {
+        res.status(400).send({
+            status: 'Error',
+            message: e.message
+        })
+    }
+};
+
+module.exports.get_customerdetails_by_id = (req, res) => {
+    CustomerDetails.findById(req.params.customerId)
         .then((customerDetails) => {
             res.send({
                 status: 'OK',
