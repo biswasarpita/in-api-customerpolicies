@@ -1,3 +1,5 @@
+const moment = require('moment');
+const tz = require('moment-timezone')
 const initDB = require('../db'); // eslint-disable-line no-unused-vars
 const CustomerDetails = require('../Model/customerDetails');
 const PolicyDetails = require('../Model/policyDetails');
@@ -42,6 +44,38 @@ module.exports.get_customerdetails_by_id = (req, res) => {
         });
 };
 
+module.exports.get_policy_detail_by_policyNumber = async (req, res) => {
+    try {
+        const result = await PolicyDetails.findOne({ policyNumber: req.params.policyNumber });
+        res.send({
+            status: 'OK',
+            policies: result
+        });
+    }
+    catch (e) {
+        res.status(400).send({
+            status: 'ERROR',
+            message: e.message
+        });
+    };
+};
+module.exports.get_policy_detail_by_creationDate = async (req, res) => {
+    const creationdateGte = moment(req.params.creationDate).format('YYYY-MM-DDTHH:MM:SS.000Z');
+    const creationdateLte = new Date((new Date(req.params.creationDate)).setHours(23, 59, 59));
+    try {
+        const result = await PolicyDetails.find({ createdAt: { $gte: creationdateGte, $lte: creationdateLte } });
+        res.send({
+            status: 'OK',
+            policies: result
+        });
+    }
+    catch (e) {
+        res.status(400).send({
+            status: 'ERROR',
+            message: e.message
+        });
+    };
+}
 module.exports.post_customer_details = (req, res) => {
     const customerDetails = new CustomerDetails(req.body);
     customerDetails.save()

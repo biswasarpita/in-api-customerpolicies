@@ -17,6 +17,8 @@ router.use(jwtOperatons.jwtVerify);
 // GET
 //
 router.get('/mdmid/:mdmid?', customerPolicyControl.get_customerdetails_by_mdmid);
+router.get('/policyNumber/:policyNumber', customerPolicyControl.get_policy_detail_by_policyNumber);
+router.get('/creationDate/:creationDate', customerPolicyControl.get_policy_detail_by_creationDate);
 //router.get('/verify/token',jwtOperatons.jwtVerify);
 //router.get('/auth/tokenData', jwtOperatons.jwtDecode);
 
