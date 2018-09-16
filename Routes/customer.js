@@ -1,6 +1,5 @@
 const express = require('express');
 const jwtOperatons = require('../Middleware/jwtOperataions');
-
 const router = express.Router();
 
 //
@@ -11,8 +10,6 @@ const customerPolicyControl = require('../Controller/customerPolicyControl');
 //
 // Middlewares
 //
-//router.use(jwtOperatons.jwtSign);
-//router.use(jwtOperatons.jwtDecode);
 router.use(jwtOperatons.jwtVerify);
 
 
@@ -20,7 +17,6 @@ router.use(jwtOperatons.jwtVerify);
 // GET
 //
 router.get('/mdmid/:mdmid?', customerPolicyControl.get_customerdetails_by_mdmid);
-router.get('/auth/token/:mdmId', jwtOperatons.jwtSign)
 //router.get('/verify/token',jwtOperatons.jwtVerify);
 //router.get('/auth/tokenData', jwtOperatons.jwtDecode);
 

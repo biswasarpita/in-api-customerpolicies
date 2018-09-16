@@ -18,7 +18,7 @@ module.exports.get_customerdetails_by_mdmid = async (req, res) => {
             status: 'OK',
             parties: customerDetails
         });
-     } catch (e) {
+    } catch (e) {
         res.status(400).send({
             status: 'Error',
             message: e.message

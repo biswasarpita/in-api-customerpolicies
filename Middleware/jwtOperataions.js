@@ -12,7 +12,8 @@ module.exports.jwtSign = (req, res) => {
 
 module.exports.jwtVerify = (req, res, next) => {
     try {
-        const result = jwt.verify(String(req.headers.authorization).toString());
+        const jwtPayload = req.headers.authorization.split('Bearer ')[1];
+        const result = jwt.verify(String(jwtPayload).toString());
         if (result.mdmId) {
             res.locals.mdmId = result.mdmId;
             next();
