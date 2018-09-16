@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
-const customerRoutes = require('./Routes/customer');
+const routes = require('./Routes');
 const configuration = require('./configuration');
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(bodyParser.json({
 //
 //  API routes V1
 //
-app.use('/v1/api/customer', customerRoutes);
+app.use('/', routes);
 
 app.listen(configuration.serverPort, () => {
     console.log(`Server listening at PORT ${configuration.serverPort}`);
