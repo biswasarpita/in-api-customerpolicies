@@ -60,10 +60,14 @@ module.exports.get_policy_detail_by_policyNumber = async (req, res) => {
     };
 };
 module.exports.get_policy_detail_by_creationDate = async (req, res) => {
-    const creationdateGte = moment(req.params.creationDate).format('YYYY-MM-DDTHH:MM:SS.000Z');
-    const creationdateLte = new Date((new Date(req.params.creationDate)).setHours(23, 59, 59));
+    let minDate = req.params.creationDate;
+    minDate += 'T00:00:00.000Z';
+
+    let maxDate = req.params.creationDate;
+    maxDate += 'T23:59:59.999Z';
+
     try {
-        const result = await PolicyDetails.find({ createdAt: { $gte: creationdateGte, $lte: creationdateLte } });
+        const result = await PolicyDetails.find({ createdAt: { $gte: new Date(minDate), $lte: new Date(maxDate) } });
         res.send({
             status: 'OK',
             policies: result
