@@ -1,5 +1,3 @@
-const moment = require('moment');
-const tz = require('moment-timezone')
 const initDB = require('../db'); // eslint-disable-line no-unused-vars
 const CustomerDetails = require('../Model/customerDetails');
 const PolicyDetails = require('../Model/policyDetails');
