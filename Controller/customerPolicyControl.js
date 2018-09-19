@@ -37,7 +37,7 @@ module.exports.get_customerdetails_by_id = (req, res) => {
         .catch((e) => {
             res.status(400).send({
                 status: 'ERROR',
-                outcome: e
+                message: e.message
             });
         });
 };
@@ -90,7 +90,7 @@ module.exports.post_customer_details = (req, res) => {
         .catch((e) => {
             res.status(400).send({
                 status: 'ERROR',
-                outcome: e
+                message: e.message
             });
         });
 };
@@ -107,7 +107,7 @@ module.exports.post_policy_details = (req, res) => {
         .catch((e) => {
             res.status(400).send({
                 status: 'ERROR',
-                outcome: e
+                message: e.message
             });
         });
 };
