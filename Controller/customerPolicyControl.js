@@ -36,7 +36,7 @@ module.exports.get_customerdetails_by_id = (req, res) => {
         })
         .catch((e) => {
             res.status(400).send({
-                status: 'ERROR',
+                status: 'Error',
                 message: e.message
             });
         });
@@ -52,7 +52,7 @@ module.exports.get_policy_detail_by_policyNumber = async (req, res) => {
     }
     catch (e) {
         res.status(400).send({
-            status: 'ERROR',
+            status: 'Error',
             message: e.message
         });
     };
@@ -73,7 +73,7 @@ module.exports.get_policy_detail_by_creationDate = async (req, res) => {
     }
     catch (e) {
         res.status(400).send({
-            status: 'ERROR',
+            status: 'Error',
             message: e.message
         });
     };
@@ -89,7 +89,7 @@ module.exports.post_customer_details = (req, res) => {
         })
         .catch((e) => {
             res.status(400).send({
-                status: 'ERROR',
+                status: 'Error',
                 message: e.message
             });
         });
@@ -106,7 +106,7 @@ module.exports.post_policy_details = (req, res) => {
         })
         .catch((e) => {
             res.status(400).send({
-                status: 'ERROR',
+                status: 'Error',
                 message: e.message
             });
         });
