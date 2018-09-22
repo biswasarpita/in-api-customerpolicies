@@ -5,20 +5,28 @@ const CoverageDetails = require('../Model/coverageDetails');
 
 module.exports.get_customerdetails_by_mdmid = async (req, res) => {
   try {
+    let coverages = [];
     const customerDetails = await CustomerDetails.findOne({ mdmid: res.locals.mdmId });
-    const policies = customerDetails.policyNumber.map(async (element, index) => {
+    const policies = customerDetails.policyNumber.map(async (element) => {
       const policyObj = await PolicyDetails.find({ policyNumber: element.policyId });
-
-      // const coverage = policyObj.policyCoverage;
-      customerDetails.policyNumber[index] = policyObj[0]; // eslint-disable-line
-      return policyObj[0];
+      const coverageDetails = policyObj.map(async (policy) => {
+        const coverageIds = await policy.policyCoverage.map(coverage => coverage.coverageId);
+        coverages = coverageIds.map(async (coverageId) => {
+          await CoverageDetails.findOne({ covID: coverageId });
+        });
+        return coverages;
+      });
+      const policyResult = { ...policyObj };
+      policyResult.coverages = await Promise.all(coverageDetails);
+      return policyResult;
     });
-    await Promise.all(policies);
 
+    const result = { ...customerDetails.toObject() };
+    result.policies = await Promise.all(policies);
 
     res.send({
       status: 'OK',
-      parties: customerDetails
+      parties: result
     });
   } catch (e) {
     res.status(400).send({
