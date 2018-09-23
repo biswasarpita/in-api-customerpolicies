@@ -5,24 +5,34 @@ const CoverageDetails = require('../Model/coverageDetails');
 
 module.exports.get_customerdetails_by_mdmid = async (req, res) => {
   try {
-    let coverages = [];
-    const customerDetails = await CustomerDetails.findOne({ mdmid: res.locals.mdmId });
+    /* Fetch customer by mdmId */
+    const customerDetails = await CustomerDetails.findOne({
+      mdmid: res.locals.mdmId
+    });
+    /* Create a new policies obj based upon policy numbers recieved from customer object */
     const policies = customerDetails.policyNumber.map(async (element) => {
-      const policyObj = await PolicyDetails.find({ policyNumber: element.policyId });
-      const coverageDetails = policyObj.map(async (policy) => {
-        const coverageIds = await policy.policyCoverage.map(coverage => coverage.coverageId);
-        coverages = coverageIds.map(async (coverageId) => {
-          await CoverageDetails.findOne({ covID: coverageId });
-        });
-        return coverages;
+      /* Get policy object from policy collection by its policy number */
+      const policyObj = await PolicyDetails.findOne({
+        policyNumber: element.policyId
       });
-      const policyResult = { ...policyObj };
-      policyResult.coverages = await Promise.all(coverageDetails);
+      /* Get all the coverage IDs in each policy object */
+      const coverageIds = await policyObj.policyCoverage.map(
+        coverage => coverage.coverageId
+      );
+      /* Get all the coverage objects from coverage collection */
+      const coverages = coverageIds.map(async coverageId => CoverageDetails.findOne({ covID: coverageId }));
+      /* Copying policy object as a new object */
+      const policyResult = { ...policyObj.toObject() };
+      /* Add a new array to hold the coverage data */
+      policyResult.coverages = await Promise.all(coverages);
+
       return policyResult;
     });
-
+    /* Copy customer details object */
     const result = { ...customerDetails.toObject() };
+    /* Add a new array to hold detaled policy details */
     result.policies = await Promise.all(policies);
+    delete result.policyNumber;
 
     res.send({
       status: 'OK',
@@ -54,7 +64,9 @@ module.exports.get_customerdetails_by_id = (req, res) => {
 
 module.exports.get_policy_detail_by_policyNumber = async (req, res) => {
   try {
-    const result = await PolicyDetails.findOne({ policyNumber: req.params.policyNumber });
+    const result = await PolicyDetails.findOne({
+      policyNumber: req.params.policyNumber
+    });
     res.send({ status: 'OK', policies: result });
   } catch (e) {
     res.status(400).send({
@@ -71,8 +83,9 @@ module.exports.get_policy_detail_by_creationDate = async (req, res) => {
   maxDate += 'T23:59:59.999Z';
 
   try {
-    const result = await PolicyDetails
-      .find({ createdAt: { $gte: new Date(minDate), $lte: new Date(maxDate) } });
+    const result = await PolicyDetails.find({
+      createdAt: { $gte: new Date(minDate), $lte: new Date(maxDate) }
+    });
     res.send({
       status: 'OK',
       policies: result
@@ -86,7 +99,8 @@ module.exports.get_policy_detail_by_creationDate = async (req, res) => {
 };
 module.exports.post_customer_details = (req, res) => {
   const customerDetails = new CustomerDetails(req.body);
-  customerDetails.save()
+  customerDetails
+    .save()
     .then((savedData) => {
       res.send({
         status: 'OK',
@@ -103,7 +117,8 @@ module.exports.post_customer_details = (req, res) => {
 
 module.exports.post_policy_details = (req, res) => {
   const policyDetails = new PolicyDetails(req.body);
-  policyDetails.save()
+  policyDetails
+    .save()
     .then((savedData) => {
       res.send({
         status: 'OK',
@@ -120,7 +135,8 @@ module.exports.post_policy_details = (req, res) => {
 
 module.exports.post_coverage_details = (req, res) => {
   const coverageDetails = new CoverageDetails(req.body);
-  coverageDetails.save()
+  coverageDetails
+    .save()
     .then((savedData) => {
       res.send({
         status: 'OK',
