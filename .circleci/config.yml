@@ -28,7 +28,7 @@ jobs:
       - run: wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
       - run: unzip sonar-scanner-cli-3.2.0.1227-linux.zip
       - run: ls 
-      - run: export PATH=$PATH:/sonar-scanner-cli-3.2.0.1227-linux/bin
+      - run: export PATH=$PATH:/sonar-scanner-3.2.0.1227-linux/bin
       - run: npm install
 
       - save_cache:
@@ -39,7 +39,7 @@ jobs:
       # run tests!
       - run: ls sonar-scanner-3.2.0.1227-linux
       - run: npm run lint
-      - run: ./sonar-scanner-cli-3.2.0.1227-linux/bin/sonar-scanner.sh -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4929b7f0e7f8eb04d393540e253c8f346a59f01a
+      - run: sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=4929b7f0e7f8eb04d393540e253c8f346a59f01a
 workflows:
   version: 2
   build_and_test:
