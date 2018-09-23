@@ -1,8 +1,8 @@
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
-const routes = require('./Routes');
-const configuration = require('./configuration');
+const routes = require('./src/Routes');
+const configuration = require('./src/configuration');
 
 const app = express();
 app.server = http.createServer();
