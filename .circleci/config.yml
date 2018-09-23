@@ -35,16 +35,10 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-  
-  - test:   
+        
       # run tests!
       - run: ls sonar-scanner-3.2.0.1227-linux
       - run: npm run lint
       - run: ls
       - run: ./sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=208514aa386618fcde7178fe66d326214264eb9f -X
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test
+      
