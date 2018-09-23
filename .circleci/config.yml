@@ -8,9 +8,6 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-      - run: wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
-      - run: unzip sonar-scanner-cli-3.2.0.1227-linux.zip
-      - run: export PATH=$PATH:/sonar-scanner-cli-3.2.0.1227-linux/sonar-scanner-cli-3.2.0.1227-linux/bin
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -28,6 +25,9 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run: wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
+      - run: unzip sonar-scanner-cli-3.2.0.1227-linux.zip
+      - run: export PATH=$PATH:/sonar-scanner-cli-3.2.0.1227-linux/sonar-scanner-cli-3.2.0.1227-linux/bin
       - run: npm install
 
       - save_cache:
