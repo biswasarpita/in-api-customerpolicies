@@ -10,15 +10,19 @@ app.server = http.createServer();
 //
 // Middleware
 //
-app.use(bodyParser.json({
+app.use(
+  bodyParser.json({
     limit: configuration.bodyLimit
-}));
+  })
+);
 
 //
 //  API routes V1
 //
 app.use('/', routes);
 
-app.listen(configuration.serverPort, () => {
-    console.log(`Server listening at PORT ${configuration.serverPort}`);
+const server = app.listen(configuration.serverPort, () => {
+  console.log(`Server listening at PORT ${configuration.serverPort}`); // eslint-disable-line
 });
+
+module.exports = server;
