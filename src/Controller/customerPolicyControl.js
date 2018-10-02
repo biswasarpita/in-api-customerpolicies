@@ -2,6 +2,7 @@ const initDB = require('../db'); // eslint-disable-line no-unused-vars
 const CustomerDetails = require('../Model/customerDetails');
 const PolicyDetails = require('../Model/policyDetails');
 const CoverageDetails = require('../Model/coverageDetails');
+const FileStore = require('../Model/filesStore');
 
 module.exports.get_customerdetails_by_mdmid = async (req, res) => {
   try {
@@ -149,4 +150,43 @@ module.exports.post_coverage_details = (req, res) => {
         message: e.message
       });
     });
+};
+
+//
+// Upload File
+//
+module.exports.post_file_to_db = (req, res) => {
+  const filesStore = new FileStore(req.body);
+  filesStore
+    .save()
+    .then((savedData) => {
+      res.send({
+        status: 'OK',
+        outcome: savedData
+      });
+    })
+    .catch((e) => {
+      res.status(400).send({
+        status: 'Error',
+        message: e.message
+      });
+    });
+};
+
+//
+// Get File
+//
+module.exports.get_file_from_db = async (req, res) => {
+  try {
+    const filedata = await FileStore.findOne({
+      fileIdent: req.params.fileIdent
+    });
+    const result = filedata.fileName;
+    res.send({ status: 'OK', files: result });
+  } catch (e) {
+    res.status(400).send({
+      status: 'Error',
+      message: e.message
+    });
+  }
 };
