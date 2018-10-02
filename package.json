@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "lint": "./node_modules/.bin/eslint ./src",
-    "test": "./node_modules/.bin/mocha -R spec ./src/**/*.spec.js* --exit"
+    "test": "./node_modules/.bin/mocha -R spec ./src/**/*.spec.js* --exit",
+    "coverage": "./node_modules/.bin/nyc nyc ./node_modules/.bin/mocha -R spec ./src/**/*.spec.js* -t 10000 --exit"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "nyc": "^13.0.1"
   }
 }

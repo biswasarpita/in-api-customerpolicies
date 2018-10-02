@@ -39,4 +39,5 @@ jobs:
       - run: ls sonar-scanner-3.2.0.1227-linux
       - run: npm run lint
       - run: npm run test
+      - run: npm run coverage
       - run: ./sonar-scanner-3.2.0.1227-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=208514aa386618fcde7178fe66d326214264eb9f
