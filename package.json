@@ -1,13 +1,13 @@
 {
   "name": "customer_policy_details",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "customer_policy_details",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "lint": "./node_modules/.bin/eslint ./src",
-    "test": "./node_modules/.bin/mocha -R spec ./src/**/*.spec.js* --exit",
-    "coverage": "./node_modules/.bin/nyc nyc ./node_modules/.bin/mocha -R spec ./src/**/*.spec.js* -t 10000 --exit"
+    "lint": "eslint ./src",
+    "test": "mocha -R spec ./src/**/*.spec.js* -t 10000 --exit",
+    "coverage": "nyc npm run test"
   },
   "author": "",
   "license": "ISC",

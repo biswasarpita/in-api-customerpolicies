@@ -1,7 +1,6 @@
 {
     "reporter": [
         "lcov",
-        "text-lcov",
         "text-summary"
     ],
     "include": [
@@ -10,10 +9,10 @@
     "exclude": [
         "src/**/*.spec.js"
     ],
-    "lines": 100,
-    "statements": 100,
-    "functions": 100,
-    "branches": 100,
+    "lines": 85,
+    "statements": 85,
+    "functions": 85,
+    "branches": 85,
     "watermarks": {
       "lines": [80, 95],
       "functions": [80, 95],
