@@ -20,8 +20,8 @@ app.use(
 //
 app.use('/', routes);
 
-const server = app.listen(configuration.serverPort, () => {
-  console.log(`Server listening at PORT ${configuration.serverPort}`); // eslint-disable-line
+const server = app.listen(process.env.PORT || configuration.serverPort, () => {
+  console.log(`Server listening at PORT ${process.env.PORT || configuration.serverPort}`); // eslint-disable-line
 });
 
 module.exports = server;
